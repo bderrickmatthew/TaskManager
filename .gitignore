@@ -1,0 +1,32 @@
+# Dependencies
+/vendor/
+/node_modules/
+
+# Environment files
+.env
+.env_dev
+.env.local
+.env.*.local
+
+# PHPUnit
+.phpunit.result.cache
+.phpunit.cache/
+/coverage/
+/build/
+
+# IDE specific files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Operating System specific files
+.DS_Store
+Thumbs.db
+
+# Local configuration files
+config/database.php
+
+# Logs and databases
+*.log
+*.sqlite

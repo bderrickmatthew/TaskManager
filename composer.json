@@ -1,0 +1,24 @@
+{
+    "name": "bdm/taskmanager",
+    "description": "manage your tasks",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Bdm\\TaskManager\\": "app/"
+        },
+        "files": [
+            "bootstrap.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "bderrickmatthew",
+            "email": "bderrickmatthew@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require-dev": {
+        "phpunit/phpunit": "^12.1@dev"
+    }
+}
