@@ -30,7 +30,13 @@ function config(string $key): mixed
 
 function loadEnv(): void
 {
-    $env = \file_get_contents('.env_dev');
+    $envFile = file_exists('.env.github') ? '.env.github' : '.env_dev';
+    if (!file_exists($envFile)) {
+        error_log("Environment file not found: " . $envFile);
+        return;
+    }
+
+    $env = \file_get_contents($envFile);
     $lines = \explode("\n", $env);
 
     foreach ($lines as $line) {
