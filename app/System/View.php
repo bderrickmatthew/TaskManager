@@ -1,6 +1,8 @@
 <?php
 namespace Bdm\TaskManager\System;
 
+use Bdm\TaskManager\System\CSRF;
+
 use Exception;
 
 class View
@@ -28,5 +30,13 @@ class View
     {
         $content = self::render($viewFile, $variables);
         return self::render($layout, ['contentLayout' => $content] + $variables); // merges content and other variables
+    }
+
+    public static function csrfField(): string
+    {
+        return sprintf(
+            '<input type="hidden" name="csrf_token" value ="%s">',
+            CSRF::generateToken()
+        );
     }
 }

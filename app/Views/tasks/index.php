@@ -1,6 +1,9 @@
 <h1>Task Manager</h1>
 
-<form action="/tasks/create" method="post">
+<form
+    action="/tasks/create" method="post">
+    <?= Bdm\TaskManager\System\View::csrfField() ?>
+
     <input type="text" name="task" placeholder="Add a new task" required>
     <button type="submit">Add task</button>
 </form>
@@ -26,14 +29,14 @@
 <?php endif; ?>
 
 <?php if (!empty($tasks)): ?>
-    <h2>New Task Added: </h2>
+    <h2>New Task Added:
+    </h2>
     <?php foreach ($tasks as $index => $task): ?>
         <li style="margin-bottom: 5px;">
             <?= $task->title; ?>
 
             <?php if (!$task->is_concluded): ?>
-                <form action="/tasks/completed" method="post" style="display: inline;">
-                    <input type="hidden" name="id" value="<?= $task->id ?>">
+                    <form action="/tasks/completed" method="post" style="display: inline;"> <input type="hidden" name="id" value="<?= $task->id ?>">
                     <input type="hidden" name="action" value="markTaskAsCompleted">
                     <button type="submit" name="completed">Mark completed</button>
                 </form>
@@ -43,7 +46,10 @@
 
             <?php endif; ?>
 
-            <form action="/tasks/delete" method="post" style="display:inline;">
+            <form
+                action="/tasks/delete" method="post" style="display:inline;">
+                <?= Bdm\TaskManager\System\View::csrfField() ?>
+
                 <input type="hidden" name="id" value="<?= $task->id ?>">
                 <input type="hidden" name="action" value="deleteTaskById">
                 <button type="submit" name="delete">delete</button>
@@ -51,8 +57,10 @@
         </li>
     <?php endforeach; ?>
 
-    <form action="/tasks/delete-all" method="post" style="margin-top: 25px;">
+    <form
+        action="/tasks/delete-all" method="post" style="margin-top: 25px;">
+        <?= Bdm\TaskManager\System\View::csrfField() ?>
+
         <button type="submit" name="clear">Clear All</button>
     </form>
 <?php endif; ?>
-

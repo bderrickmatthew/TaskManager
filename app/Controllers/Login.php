@@ -5,6 +5,7 @@ use Bdm\TaskManager\Models\User;
 use Bdm\TaskManager\System\Controller;
 use Bdm\TaskManager\System\Redirect;
 use Bdm\TaskManager\System\Route;
+use Bdm\TaskManager\Systtem\CSRF;
 
 class Login extends Controller
 {
@@ -29,8 +30,10 @@ class Login extends Controller
             $this->validateLogin($user, $pass);
             $this->createSession();
 
+            CSRF::removeToken();
             Redirect::to('/');
         } catch (\Throwable $th) {
+            CSRF::removeToken();
             Redirect::to('/login', [
                 'error' => $th->getMessage()
             ]);

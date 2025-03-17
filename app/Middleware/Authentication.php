@@ -9,8 +9,8 @@ class Authentication
     private $unauthenticatedRoutes = [
         '/login',
         '/login/submit',
-        '/register', // Add this line
-        '/register/submit', // Add this line
+        '/register',
+        '/register/submit',
     ];
 
     public function handle()

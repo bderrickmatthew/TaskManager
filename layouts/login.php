@@ -12,6 +12,7 @@
     <body>
         <h1>Login</h1>
         <form action="/login/submit" method="post">
+            <input type="hidden" name="csrf_token" value="<?= \Bdm\TaskManager\System\CSRF::generateToken() ?>">
             <input type="text" name="user" id="user" placeholder="User" required>
             <input type="password" name="pass" id="pass" placeholder="********" required>
 

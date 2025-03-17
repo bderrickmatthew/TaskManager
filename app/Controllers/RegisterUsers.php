@@ -5,6 +5,7 @@ use Bdm\TaskManager\Models\User;
 use Bdm\TaskManager\System\Controller;
 use Bdm\TaskManager\System\Redirect;
 use Bdm\TaskManager\System\Route;
+use Bdm\TaskManager\System\CSRF;
 
 class RegisterUsers extends Controller
 {
@@ -31,10 +32,12 @@ class RegisterUsers extends Controller
             $payload = $this->mappingToSave();
             $this->userModel->create($payload);
 
+            CSRF::removeToken();
             Redirect::to('/login', [
                 'success' => 'Registration successful. Please log in.'
             ]);
         } catch (\Throwable $th) {
+            CSRF::removeToken();
             Redirect::to('/register', [
                 'error' => $th->getMessage()
             ]);

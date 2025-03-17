@@ -3,13 +3,16 @@ namespace Bdm\TaskManager\System;
 
 use Bdm\TaskManager\Traits\Singleton;
 use Bdm\TaskManager\Middleware\Authentication;
+use Bdm\TaskManager\Middleware\CSRFProtection;
 
 class App
 {
     use Singleton;
 
     protected $middlewares = [
+        CSRFProtection::class,
         Authentication::class,
+
         //... other middleware you can add in the future
     ];
 

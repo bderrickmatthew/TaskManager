@@ -17,8 +17,12 @@
             "email": "bderrickmatthew@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.2"
+    },
     "require-dev": {
-        "phpunit/phpunit": "^12.1@dev"
-    }
+        "phpunit/phpunit": "^10.0"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }
