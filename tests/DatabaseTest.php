@@ -26,7 +26,7 @@ class DatabaseTest extends TestCase
     private function createTestTables(): void
     {
         $this->db->exec("
-            CREATE TABLE IF NOT EXISTS users (
+            CREATE TABLE IF NOT EXISTS test_users (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(255) NOT NULL,
                 login VARCHAR(255) NOT NULL UNIQUE,
@@ -38,7 +38,7 @@ class DatabaseTest extends TestCase
         ");
 
         $this->db->exec("
-            CREATE TABLE IF NOT EXISTS tasks (
+            CREATE TABLE IF NOT EXISTS test_tasks (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 title VARCHAR(255) NOT NULL,
                 user_id INT NOT NULL,
@@ -46,15 +46,15 @@ class DatabaseTest extends TestCase
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 deleted_at TIMESTAMP NULL,
-                FOREIGN KEY (user_id) REFERENCES users(id)
+                FOREIGN KEY (user_id) REFERENCES test_users(id)
             )
         ");
     }
 
     private function dropTestTables(): void
     {
-        $this->db->exec("DROP TABLE IF EXISTS tasks");
-        $this->db->exec("DROP TABLE IF EXISTS users");
+        $this->db->exec("DROP TABLE IF EXISTS test_tasks");
+        $this->db->exec("DROP TABLE IF EXISTS test_users");
     }
 
     public function testDatabaseConnection(): void
@@ -65,7 +65,7 @@ class DatabaseTest extends TestCase
     public function testCreateUser(): void
     {
         $stmt = $this->db->prepare("
-            INSERT INTO users (name, login, password)
+            INSERT INTO test_users (name, login, password)
             VALUES (:name, :login, :password)
         ");
 
@@ -83,7 +83,7 @@ class DatabaseTest extends TestCase
     {
         // First create a user
         $stmt = $this->db->prepare("
-            INSERT INTO users (name, login, password)
+            INSERT INTO test_users (name, login, password)
             VALUES (:name, :login, :password)
         ");
 
@@ -97,7 +97,7 @@ class DatabaseTest extends TestCase
 
         // Then create a task for that user
         $stmt = $this->db->prepare("
-            INSERT INTO tasks (title, user_id)
+            INSERT INTO test_tasks (title, user_id)
             VALUES (:title, :user_id)
         ");
 
@@ -110,7 +110,7 @@ class DatabaseTest extends TestCase
 
         // Verify the task was created
         $stmt = $this->db->prepare("
-            SELECT * FROM tasks WHERE user_id = :user_id
+            SELECT * FROM test_tasks WHERE user_id = :user_id
         ");
         $stmt->execute(['user_id' => $userId]);
         $task = $stmt->fetch(PDO::FETCH_OBJ);
@@ -125,7 +125,7 @@ class DatabaseTest extends TestCase
     {
         // Create user and task first
         $stmt = $this->db->prepare("
-            INSERT INTO users (name, login, password)
+            INSERT INTO test_users (name, login, password)
             VALUES (:name, :login, :password)
         ");
 
@@ -138,7 +138,7 @@ class DatabaseTest extends TestCase
         $userId = $this->db->lastInsertId();
 
         $stmt = $this->db->prepare("
-            INSERT INTO tasks (title, user_id)
+            INSERT INTO test_tasks (title, user_id)
             VALUES (:title, :user_id)
         ");
 
@@ -151,7 +151,7 @@ class DatabaseTest extends TestCase
 
         // Mark task as completed
         $stmt = $this->db->prepare("
-            UPDATE tasks 
+            UPDATE test_tasks 
             SET is_concluded = 1 
             WHERE id = :id
         ");
@@ -163,7 +163,7 @@ class DatabaseTest extends TestCase
         // Verify task is marked as completed
         $stmt = $this->db->prepare("
             SELECT is_concluded 
-            FROM tasks 
+            FROM test_tasks 
             WHERE id = :id
         ");
         $stmt->execute(['id' => $taskId]);

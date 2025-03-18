@@ -30,7 +30,7 @@ function config(string $key): mixed
 
 function loadEnv(): void
 {
-    $envFile = file_exists('.env.github') ? '.env.github' : '.env_dev';
+    $envFile = file_exists('.env_dev') ? '.env_dev' : '.env.github';
     if (!file_exists($envFile)) {
         error_log("Environment file not found: " . $envFile);
         return;
